@@ -12,8 +12,15 @@ export default {
   },
 };
 
-export const SearchStory = () => <Search />;
-SearchStory.parameters = {
+export const SearchDefault = () => <Search />;
+SearchDefault.parameters = {
+  viewport: {
+    defaultViewport: "responsive",
+  },
+};
+
+export const SearchWithAutofocus = () => <Search autofocus />;
+SearchWithAutofocus.parameters = {
   viewport: {
     defaultViewport: "responsive",
   },

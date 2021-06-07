@@ -30,6 +30,7 @@ export default function Search(props) {
           placeholder="Zoeken"
           onChange={handleChange}
           autoComplete="off"
+          autoFocus={props.autofocus}
           ref={searchInput}
         ></input>
         {userInput ? (

@@ -30,6 +30,14 @@ describe("Search", () => {
     const input = getByRole("textbox");
     expect(input.autocomplete).toEqual("off");
   });
+  test("it should not have autofocus", () => {
+    const { getByRole } = render(<Search />);
+    expect(getByRole("textbox")).not.toHaveFocus();
+  });
+  test("it should have autofocus", () => {
+    const { getByRole } = render(<Search autofocus />);
+    expect(getByRole("textbox")).toHaveFocus();
+  });
   test("it should display clear button when input has value", () => {
     const { getByRole, container } = render(<Search />);
     const input = getByRole("textbox");
