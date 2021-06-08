@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Suggest from "../Suggest/Suggest";
 import "./Search.css";
+import fetchSuggestData from "../../utils/searchUtils";
 
 export default function Search(props) {
   const [userInput, setUserInput] = useState("");
@@ -8,13 +9,9 @@ export default function Search(props) {
   const searchInput = useRef(null);
 
   useEffect(() => {
-    if (userInput) {
+    if (userInput && userInput.trim().length >= 2) {
       (async () => {
-        const json = await (await fetch("http://localhost:3000/search")).json();
-        // In real-life application, we'd pass user input as a search query
-        const suggestions = json.suggestions.filter((suggestion) =>
-          suggestion.searchterm.toLowerCase().includes(userInput.toLowerCase())
-        );
+        const suggestions = await fetchSuggestData(userInput);
         setSuggestions(suggestions);
       })();
     } else {
@@ -61,7 +58,7 @@ export default function Search(props) {
         )}
         <button className="search-button" type="submit"></button>
       </form>
-      {userInput && searchInput.current === document.activeElement ? (
+      {userInput.trim() ? (
         <Suggest
           suggestions={suggestions}
           userInput={userInput}
