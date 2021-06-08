@@ -1,0 +1,17 @@
+.suggest-item {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.suggest-item:first-child {
+  border-top: 1px solid #eee;
+  margin-top: 10px;
+}
+
+.suggest-item:hover {
+  background: #eee;
+}
+
+.highlighted {
+  color: #80868b;
+}
