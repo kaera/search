@@ -115,18 +115,15 @@ describe("Search", () => {
     expect(getByRole("textbox")).toHaveFocus();
   });
 
-  test("it should search on Enter", () => {
+  test("it should submit form", () => {
     const onSubmit = jest.fn();
     const newInputValue = "new value";
     const { getByRole, container } = render(<Search onSubmit={onSubmit} />);
     const input = getByRole("textbox");
-    const searchButton = container.querySelector(".search-button");
+    const form = container.querySelector(".search-box");
 
     fireEvent.change(input, { target: { value: newInputValue } });
-
-    expect(input.value).toEqual(newInputValue);
-
-    fireEvent.click(searchButton);
+    fireEvent.submit(form);
 
     expect(onSubmit).toHaveBeenCalledWith(newInputValue);
   });
