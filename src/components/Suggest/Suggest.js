@@ -1,4 +1,3 @@
-import React from "react";
 import "./Suggest.css";
 
 export default function Suggest(props) {

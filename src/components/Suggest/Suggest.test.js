@@ -1,4 +1,3 @@
-import React from "react";
 import { render, cleanup, fireEvent } from "@testing-library/react";
 import Suggest from "./Suggest";
 import "@testing-library/jest-dom";
@@ -15,7 +14,7 @@ describe("Suggest", () => {
   afterEach(cleanup);
 
   test("it should mount", async () => {
-    const { getByTestId } = render(<Suggest suggestions={[]} />);
+    const { getByTestId } = render(<Suggest {...props} />);
 
     expect(getByTestId("Suggest")).toBeInTheDocument();
   });
@@ -30,10 +29,6 @@ describe("Suggest", () => {
   });
 
   test("it should highlight number of results", async () => {
-    props = {
-      ...props,
-      suggestions: [{ searchterm: "test item", nrResults: 2 }],
-    };
     const { getByText } = render(<Suggest {...props} />);
 
     const numberOfResults = getByText(`(${props.suggestions[0].nrResults})`);
@@ -42,10 +37,6 @@ describe("Suggest", () => {
   });
 
   test("it should pass selected suggestion on click", async () => {
-    props = {
-      ...props,
-      suggestions: [{ searchterm: "test item", nrResults: 2 }],
-    };
     const { container } = render(<Suggest {...props} />);
 
     fireEvent.click(container.querySelector(".suggest-item"));
