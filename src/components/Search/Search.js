@@ -1,23 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 import Suggest from "../Suggest/Suggest";
 import "./Search.css";
-import fetchSuggestData from "../../utils/searchUtils";
+import useDebounce from "../../hooks/useDebounce";
 
 export default function Search(props) {
   const [userInput, setUserInput] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const searchInput = useRef(null);
+  const debouncedSuggestions = useDebounce(userInput, 300);
 
   useEffect(() => {
     if (userInput && userInput.trim().length >= 2) {
-      (async () => {
-        const suggestions = await fetchSuggestData(userInput);
-        setSuggestions(suggestions);
-      })();
+      setSuggestions(debouncedSuggestions);
     } else {
       setSuggestions([]);
     }
-  }, [userInput]);
+  }, [debouncedSuggestions, userInput]);
+
   const handleChange = (e) => {
     setUserInput(e.target.value);
   };
@@ -60,7 +59,7 @@ export default function Search(props) {
       </form>
       {userInput.trim() ? (
         <Suggest
-          suggestions={suggestions}
+          suggestions={suggestions || []}
           userInput={userInput}
           onSelect={(query) => {
             setUserInput(query);
