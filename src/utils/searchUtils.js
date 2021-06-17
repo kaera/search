@@ -1,7 +1,7 @@
-export default async function fetchSuggestData(userInput) {
+export default async function fetchSuggestData(query) {
   try {
     const json = await (
-      await fetch(`http://localhost:3000/search?q=${userInput}`)
+      await fetch(`http://localhost:3000/search?q=${query}`)
     ).json();
     return json.suggestions;
   } catch (e) {

@@ -45,19 +45,17 @@ export default function Search(props) {
           autoComplete="off"
           autoFocus={props.autofocus}
           ref={searchInput}
-        ></input>
-        {userInput ? (
+        />
+        {userInput && (
           <button
             className="clear-button"
             type="reset"
             onClick={handleClearInput}
-          ></button>
-        ) : (
-          <></>
+          />
         )}
-        <button className="search-button" type="submit"></button>
+        <button className="search-button" type="submit" />
       </form>
-      {userInput.trim() ? (
+      {userInput.trim() && (
         <Suggest
           suggestions={suggestions || []}
           userInput={userInput}
@@ -66,8 +64,6 @@ export default function Search(props) {
             props.onSubmit(query);
           }}
         />
-      ) : (
-        <></>
       )}
     </div>
   );
