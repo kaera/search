@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Suggest from "../Suggest/Suggest";
 import "./Search.css";
 import useDebounce from "../../hooks/useDebounce";
+import highlightSuggestions from "../../utils/highlightUtils";
 
 export default function Search(props) {
   const [userInput, setUserInput] = useState("");
@@ -11,7 +12,7 @@ export default function Search(props) {
 
   useEffect(() => {
     if (userInput && userInput.trim().length >= 2) {
-      setSuggestions(debouncedSuggestions);
+      setSuggestions(highlightSuggestions(debouncedSuggestions, userInput));
     } else {
       setSuggestions([]);
     }
@@ -58,7 +59,6 @@ export default function Search(props) {
       {userInput.trim() && (
         <Suggest
           suggestions={suggestions || []}
-          userInput={userInput}
           onSelect={(query) => {
             setUserInput(query);
             props.onSubmit(query);

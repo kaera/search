@@ -4,9 +4,12 @@ import "@testing-library/jest-dom";
 
 describe("Suggest", () => {
   let props = {
-    userInput: "test",
     suggestions: [
-      { searchterm: "test item", nrResults: 2 },
+      {
+        searchterm: "test item",
+        nrResults: 2,
+        html: "<strong>test</strong> item",
+      },
       { searchterm: "item", nrResults: 4 },
     ],
     onSelect: jest.fn(),
@@ -21,8 +24,9 @@ describe("Suggest", () => {
 
   test("it should highlight user input in suggestions", async () => {
     const { getAllByText } = render(<Suggest {...props} />);
+    const userInput = "test";
 
-    const filteredSuggestions = getAllByText(props.userInput);
+    const filteredSuggestions = getAllByText(userInput);
     for (let suggestion of filteredSuggestions) {
       expect(suggestion).toContainHTML("strong");
     }

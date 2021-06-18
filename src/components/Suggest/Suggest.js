@@ -1,11 +1,11 @@
 import "./Suggest.css";
+import parse from "html-react-parser";
 
 export default function Suggest(props) {
-  const { userInput, suggestions, onSelect } = props;
+  const { suggestions, onSelect } = props;
   return (
     <div data-testid="Suggest">
       {suggestions.map((suggestion, i) => {
-        const inputIndex = suggestion.searchterm.indexOf(userInput);
         return (
           <div
             key={i}
@@ -14,11 +14,7 @@ export default function Suggest(props) {
               onSelect(suggestion.searchterm);
             }}
           >
-            <span>{suggestion.searchterm.slice(0, inputIndex)}</span>
-            <strong>{userInput}</strong>
-            <span>
-              {suggestion.searchterm.slice(inputIndex + userInput.length)}
-            </span>
+            <span>{parse(`${suggestion.html}`)}</span>
             <span className="highlighted"> ({suggestion.nrResults})</span>
           </div>
         );
